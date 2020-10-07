@@ -1,0 +1,24 @@
+{
+  "name": "sleek-v2-firebase",
+  "version": "1.0.0",
+  "description": "firebase wrapper for sleek-v2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laihoj/sleek-v2-firebase.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laihoj/sleek-v2-firebase/issues"
+  },
+  "homepage": "https://github.com/laihoj/sleek-v2-firebase#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "firebase-admin": "^9.2.0"
+  }
+}
