@@ -4,18 +4,18 @@ const app           = express();
 app.use(bodyParser.json());
 
 
-// const admin         = require('firebase-admin');
+const admin         = require('firebase-admin');
 
-// admin.initializeApp({
-//   credential: admin.credential.cert({
-//     "private_key": process.env.FIREBASE_PRIVATE_KEY,
-//     "client_email": process.env.FIREBASE_CLIENT_EMAIL,
-//     "project_id": process.env.PROJECT_ID,
-//   }),
-//   databaseURL: process.env.DATABASE_URL,
-// });
+admin.initializeApp({
+  credential: admin.credential.cert({
+    "private_key": process.env.FIREBASE_PRIVATE_KEY,
+    "client_email": process.env.FIREBASE_CLIENT_EMAIL,
+    "project_id": process.env.PROJECT_ID,
+  }),
+  databaseURL: process.env.DATABASE_URL,
+});
 
-// var db = admin.database();
+var db = admin.database();
 
 // const node_ref = db.ref("node");
 // node_ref.once("value", function(snapshot) {
