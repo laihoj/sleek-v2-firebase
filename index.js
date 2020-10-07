@@ -17,33 +17,33 @@ admin.initializeApp({
 
 var db = admin.database();
 
-// const node_ref = db.ref("node");
-// node_ref.once("value", function(snapshot) {
-//   console.log(snapshot.val());
-// });
+const node_ref = db.ref("node");
+node_ref.once("value", function(snapshot) {
+  console.log(snapshot.val());
+});
 
 app.get("/", async (req, res) => {
   res.send("GET and POST at /api/node are implemented, respond with JSON objects")
 })
 
-// app.get("/api/node", async (req, res) => {
-//   node_ref.once("value", function(snapshot) {
-//     let data = snapshot.val()
-//     console.log(data)
-//     res.send(data);
-//   });
-// })
+app.get("/api/node", async (req, res) => {
+  node_ref.once("value", function(snapshot) {
+    let data = snapshot.val()
+    console.log(data)
+    res.send(data);
+  });
+})
 
-// app.post("/api/node", async (req, res) => {
-//   console.log(req.body);
-//   res.send("sent")
-//   var nodeRef = node_ref.child("node");
-//   //TODO: validate body
-//   node_ref.set({
-//     ip: req.body.ip,
-//     port: req.body.port
-//   });
-// })
+app.post("/api/node", async (req, res) => {
+  console.log(req.body);
+  res.send("sent")
+  var nodeRef = node_ref.child("node");
+  //TODO: validate body
+  node_ref.set({
+    ip: req.body.ip,
+    port: req.body.port
+  });
+})
 
 app.get("/*", async (req, res) => {
   res.send("not found")
