@@ -31,7 +31,7 @@ node_ref.once("value", function(snapshot) {
 });
 
 app.get("/", async (req, res) => {
-  res.send("GET and POST at /api/node are implemented, respond with JSON objects")
+  res.send("GET and POST at /api/node and /api/recordings are implemented, respond with JSON objects")
 })
 
 app.get("/api/node", async (req, res) => {
