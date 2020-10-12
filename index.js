@@ -25,6 +25,7 @@ admin.initializeApp({
 var db = admin.database();
 
 const node_ref = db.ref("node");
+const recordings_ref = db.ref("recordings");
 node_ref.once("value", function(snapshot) {
   console.log(snapshot.val());
 });
@@ -49,6 +50,25 @@ app.post("/api/node", async (req, res) => {
   node_ref.set({
     ip: req.body.ip,
     port: req.body.port
+  });
+})
+
+
+app.get("/api/recordings", async (req, res) => {
+  recordings_ref.once("value", function(snapshot) {
+    let data = snapshot.val()
+    console.log(data)
+    res.send(data);
+  });
+})
+
+app.post("/api/recordings", async (req, res) => {
+  console.log(req.body);
+  res.send("sent")
+  var recordingsRef = recordings_ref.child("recordings");
+  recordings_ref.set({
+    jaakko: req.body.recordings,
+    // port: req.body.port
   });
 })
 
