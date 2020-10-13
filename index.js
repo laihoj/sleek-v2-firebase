@@ -35,11 +35,16 @@ app.get("/", async (req, res) => {
 })
 
 app.get("/api/node", async (req, res) => {
+  try {
   node_ref.once("value", function(snapshot) {
     let data = snapshot.val()
     console.log(data)
     res.send(data);
   });
+  } catch (error) {
+  console.log(error)
+  res.send("");
+}
 })
 
 app.post("/api/node", async (req, res) => {
@@ -55,12 +60,19 @@ app.post("/api/node", async (req, res) => {
 
 
 app.get("/api/recordings", async (req, res) => {
+  try {
+
+
   recordings_ref.once("value", function(snapshot) {
     let data = snapshot.val()
     let userRecordings = data[req.query.user]
     console.log(userRecordings)
     res.send(userRecordings);
   });
+} catch (error) {
+  console.log(error)
+  res.send("");
+}
 })
 
 app.post("/api/recordings", async (req, res) => {
