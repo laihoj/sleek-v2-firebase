@@ -57,17 +57,19 @@ app.post("/api/node", async (req, res) => {
 app.get("/api/recordings", async (req, res) => {
   recordings_ref.once("value", function(snapshot) {
     let data = snapshot.val()
-    console.log(data)
-    res.send(data);
+    let userRecordings = data[req.query.user]
+    console.log(userRecordings)
+    res.send(userRecordings);
   });
 })
 
 app.post("/api/recordings", async (req, res) => {
   console.log(req.body);
+  // console.log(req.query.user);
   res.send("sent")
   var recordingsRef = recordings_ref.child("recordings");
   recordings_ref.set({
-    jaakko: req.body.recordings,
+    [req.query.user]: req.body.recordings,
     // port: req.body.port
   });
 })
