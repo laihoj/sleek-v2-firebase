@@ -86,13 +86,15 @@ app.get("/api/recordings", async (req, res) => {
 
 app.post("/api/recordings", async (req, res) => {
   console.log(req.body);
-  // console.log(req.query.user);
   res.send("sent")
-  var recordingsRef = recordings_ref.child("recordings");
-  recordings_ref.set({
-    [req.query.user]: req.body.recordings,
-    // port: req.body.port
+  var recordingsRef = recordings_ref.child("recordings/"+req.query.user);
+  recordingsRef.set({
+    req.body.recordings,
   });
+  // var recordingsRef = recordings_ref.child("recordings");
+  // recordings_ref.set({
+  //   [req.query.user]: req.body.recordings,
+  // });
 })
 
 app.get("/*", async (req, res) => {
