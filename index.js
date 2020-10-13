@@ -60,19 +60,28 @@ app.post("/api/node", async (req, res) => {
 
 
 app.get("/api/recordings", async (req, res) => {
-  try {
-
-
-  recordings_ref.once("value", function(snapshot) {
-    let data = snapshot.val()
-    let userRecordings = data[req.query.user]
-    console.log(userRecordings)
-    res.send(userRecordings);
-  });
-} catch (error) {
-  console.log(error)
-  res.send("");
-}
+  if(! req.query.user) {
+    let message = {
+      error: "Please provide query param 'user' in recordings request"
+    }
+    res.send(message)
+  } else {
+    try {
+      recordings_ref.once("value", function(snapshot) {
+        let data = snapshot.val()
+        if(!data) {
+          res.send(null)
+        } else {
+          let userRecordings = data[req.query.user]
+          console.log(userRecordings)
+          res.send(userRecordings);
+        }
+      });
+    } catch (error) {
+      console.log(error)
+      res.send(null);
+    }
+  }
 })
 
 app.post("/api/recordings", async (req, res) => {
