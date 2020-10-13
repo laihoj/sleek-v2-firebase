@@ -89,7 +89,7 @@ app.post("/api/recordings", async (req, res) => {
   res.send("sent")
   var recordingsRef = recordings_ref.child("recordings/"+req.query.user);
   recordingsRef.set({
-    req.body.recordings,
+    [req.query.user]: req.body.recordings,
   });
   // var recordingsRef = recordings_ref.child("recordings");
   // recordings_ref.set({
