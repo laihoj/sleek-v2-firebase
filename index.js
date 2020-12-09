@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 const express       = require("express");
 const bodyParser = require('body-parser');
 const app           = express();
@@ -27,6 +31,7 @@ var db = admin.database();
 
 const node_ref = db.ref("node");
 const recordings_ref = db.ref("recordings");
+const devices_ref = db.ref("devices");
 node_ref.once("value", function(snapshot) {
   console.log(snapshot.val());
 });
@@ -91,11 +96,29 @@ app.post("/api/recordings", async (req, res) => {
   var recordingsRef = recordings_ref.child("/"+req.query.user);
   let recordings = req.body.recordings;
   recordingsRef.set(recordings);
-  // var recordingsRef = recordings_ref.child("recordings");
-  // recordings_ref.set({
-  //   [req.query.user]: req.body.recordings,
-  // });
 })
+
+
+
+//get device details by id
+app.get("/api/devices/:id", async (req, res) => {
+  let ref = devices_ref.child("/"+req.params.id);
+  ref.once("value", function(snapshot) {
+    let data = snapshot.val()
+    console.log(data)
+    res.send(data)
+  })
+})
+
+//create and update device configurations
+//no checking on parameter legality implemented
+app.post("/api/devices/:id/edit", async (req, res) => {
+  let ref = devices_ref.child("/"+req.params.id);
+  ref.set(req.body);
+  console.log("device settings saved")
+  res.send(req.body)
+})
+
 
 app.get("/*", async (req, res) => {
   res.send("not found")
