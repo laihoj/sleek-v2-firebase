@@ -118,9 +118,9 @@ app.get("/api/devices/:id", async (req, res) => {
 app.post("/api/devices/:id/edit", async (req, res) => {
   let ref = devices_ref.child("/"+req.params.id);
   let body = req.body;
-  body.remoteAddress = req.connection.remoteAddress;
-  body.ip = req.ip;
-  body.forwarded_for = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//  body.remoteAddress = req.connection.remoteAddress;
+//  body.ip = req.ip;
+  body.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress; //works thru proxies
 
   ref.set(body);
   console.log("device settings saved")
