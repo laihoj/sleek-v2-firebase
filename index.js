@@ -120,7 +120,7 @@ app.post("/api/devices/:id/edit", async (req, res) => {
   let body = req.body;
 //  body.remoteAddress = req.connection.remoteAddress;
 //  body.ip = req.ip;
-  body.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress; //works thru proxies  
+  body.remoteAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress; //works thru proxies  
 
   ref.update(body);
   console.log("device settings saved")
