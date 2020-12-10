@@ -118,7 +118,8 @@ app.get("/api/devices/:id", async (req, res) => {
 app.post("/api/devices/:id/edit", async (req, res) => {
   let ref = devices_ref.child("/"+req.params.id);
   let body = req.body;
-  body.ip = req.connection.remoteAddress;
+  body.remoteAddress = req.connection.remoteAddress;
+  body.ip = req.ip;
   ref.set(body);
   console.log("device settings saved")
   res.send(body)
