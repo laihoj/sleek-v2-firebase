@@ -32,9 +32,11 @@ var db = admin.database();
 const node_ref = db.ref("node");
 const recordings_ref = db.ref("recordings");
 const devices_ref = db.ref("devices");
-node_ref.once("value", function(snapshot) {
-  console.log(snapshot.val());
-});
+
+//commented out, not relevant anymore. Printing out node IP address on startup isnt interesting to DB wrapper
+//node_ref.once("value", function(snapshot) {
+//  console.log(snapshot.val());
+//});
 
 app.get("/", async (req, res) => {
   res.send("GET and POST at /api/node and /api/recordings are implemented, respond with JSON objects")
@@ -104,6 +106,7 @@ app.post("/api/recordings", async (req, res) => {
 app.get("/api/devices/:id", async (req, res) => {
   let ref = devices_ref.child("/"+req.params.id);
   ref.once("value", function(snapshot) {
+    //what if null because nothing found? New device routine? 
     let data = snapshot.val()
     console.log(data)
     res.send(data)
@@ -114,9 +117,11 @@ app.get("/api/devices/:id", async (req, res) => {
 //no checking on parameter legality implemented
 app.post("/api/devices/:id/edit", async (req, res) => {
   let ref = devices_ref.child("/"+req.params.id);
-  ref.set(req.body);
+  let body = req.body;
+  body.ip = req.connection.remoteAddress;
+  ref.set(body);
   console.log("device settings saved")
-  res.send(req.body)
+  res.send(body)
 })
 
 
