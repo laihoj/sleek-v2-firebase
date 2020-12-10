@@ -113,6 +113,17 @@ app.get("/api/devices/:id", async (req, res) => {
   })
 })
 
+
+//a new device will have default sampling rate set
+app.post("/api/devices/:id", async (req, res) => {
+  let ref = devices_ref.child("/"+req.params.id);
+  let body = req.body;
+  body.samplingRate = 10;
+  ref.set(body);
+  console.log("new device registered")
+  res.send(body)
+})
+
 //create and update device configurations
 //no checking on parameter legality implemented
 app.post("/api/devices/:id/edit", async (req, res) => {
